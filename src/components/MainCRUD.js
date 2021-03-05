@@ -17,8 +17,8 @@ export const MainCRUD = () => {
     { id: 10, process: "lsaiso.exe", parentProcess: "wininit.exe"},
   ];
 
-  const [data, setData] = useState(dataProcesses);
-  const [modalEdit, setModalEdit] = useState(false);
+  const [data, setData]               = useState(dataProcesses);
+  const [modalEdit, setModalEdit]     = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [modalInsert, setModalInsert] = useState(false);
 
@@ -101,6 +101,8 @@ setProcessSelected(element);
           }
         </tbody>
       </table>
+
+      {/* CRUD Modals */}
 
       <Modal isOpen={modalEdit}>
         <ModalHeader>
