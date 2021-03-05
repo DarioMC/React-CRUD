@@ -20,9 +20,69 @@ function App() {
   ];
 
   const [data, setData] = useState(dataProcesses);
+  const [modalEdit, setModalEdit] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
+  const [modalInsert, setModalInsert] = useState(false);
+
+  const [processSelected, setprocessSelected] = useState({
+    id: '',
+    process: '',
+    parentProcess: '',
+    instances: ''
+  });
+
+  const selectProcess=(element, option)=>{
+    setprocessSelected(element);
+(option==='Edit')?setModalEdit(true):setModalDelete(true)
+  }
+
+  const handleChange=e=>{
+    const {process, value}=e.target;
+    setprocessSelected((prevState)=>({
+      ...prevState,
+      [process]: value
+    }));
+  }
+
+  const edit=()=>{
+    var newData=data;
+    newData.map(nprocess=>{
+      if(nprocess.id===processSelected.id){
+        nprocess.process=processSelected.process;
+        nprocess.parentProcess=processSelected.parentProcess;
+        nprocess.instances=processSelected.parentProcess;
+        
+      }
+    });
+    setData(newData);
+    setModalEdit(false);
+  }
+
+  const remove=()=>{
+    setData(data.filter(nprocess=>nprocess.id!==processSelected.id));
+    setModalDelete(false);
+  }
+
+  const abrirModalInsertar=()=>{
+    setprocessSelected(null);
+    setModalInsert(true);
+  }
+
+  const insert =()=>{
+    var insertValue=processSelected;
+    insertValue.id=data[data.length-1].id+1;
+    var newData = data;
+    newData.push(insertValue);
+    setData(newData);
+    setModalInsert(false);
+  }
+
 
   return (
     <div className="App">
+            <h2>SANS - Find Evil - Know Normal</h2>
+            <h4>Knowing what’s normal on a Windows host helps cut through the noise to quickly locate potential malware</h4>
+      <br />
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -46,7 +106,6 @@ function App() {
           }
         </tbody>
       </table>
-
     </div>
   );
 }
